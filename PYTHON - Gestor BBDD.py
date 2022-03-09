@@ -63,7 +63,7 @@ def Leer():
     try:
         conexion= sqlite3.connect('usuarios.db')
         cursor=conexion.cursor()
-        cursor.execute('select * from datos_Usuarios where id='+variableId.get())
+        cursor.execute('select * from datos_Usuarios where id='+str(variableId.get()))
         datos_Usuarios_leido= cursor.fetchall()
         variableNombre.set(datos_Usuarios_leido[0][1])
         variableApellido.set(datos_Usuarios_leido[0][2])
@@ -72,9 +72,9 @@ def Leer():
         entrada_Comentario.delete(1.0, END)
         entrada_Comentario.insert(1.0, datos_Usuarios_leido[0][5])
         conexion.commit()
-        messagebox.showinfo('Exito', 'A continuacion se muestra los datos para el id:'+variableId.get())
+        messagebox.showinfo('Exito', 'A continuacion se muestra los datos para el id:'+str(variableId.get()))
     except:
-        messagebox.showerror('Error', 'La tabla no existe. Quizas no se creo o fue eliminada')
+        messagebox.showerror('Error', 'La tabla no se encontro. Compruebe con que es correcto el numero ingresado')
 
 
 
@@ -92,7 +92,7 @@ def Eliminar():
     try:
         conexion= sqlite3.connect('usuarios.db')
         cursor= conexion.cursor()
-        cursor.execute('delete from datos_Usuarios where id='+variableId.get())
+        cursor.execute('delete from datos_Usuarios where id='+str(variableId.get()))
         conexion.commit()
         messagebox.showinfo('Exito', 'Se elimino el registro correctamente')
     except:
@@ -104,17 +104,17 @@ def Eliminar():
 barraMenu=Menu(root)
 
 #Menu.BBDD
-menu_BBDD=Menu(barraMenu)
+menu_BBDD=Menu(barraMenu, tearoff=0)
 menu_BBDD.add_command(label='Conectar', command=Conectar)
 menu_BBDD.add_separator()
 menu_BBDD.add_command(label='Salir', command=Salir)
 
 #Menu.Borrar
-menu_Borrar=Menu(barraMenu)
+menu_Borrar=Menu(barraMenu, tearoff=0)
 menu_Borrar.add_command(label='Borrar campos', command=borrar_Campos)
 
 #Menu.Ayuda
-menu_Ayuda=Menu(barraMenu)
+menu_Ayuda=Menu(barraMenu, tearoff=0)
 menu_Ayuda.add_command(label='Acerca de..', command=acercaDe)
 menu_Ayuda.add_command(label='')
 
